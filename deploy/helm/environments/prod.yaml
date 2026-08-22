@@ -15,7 +15,7 @@ web:
   image:
     repository: dtr.admin.avade.fr/avelys/web
     # Commit tags are suitable for previews; formal releases use an exact Git tag.
-    tag: COMMIT_6cf5bf9e
+    tag: COMMIT_cf61a3cc
   runtimeConfig:
     oidcAuthority: ""
 
