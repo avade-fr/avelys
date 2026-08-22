@@ -33,6 +33,9 @@ api:
 
 ingress:
   host: avelys.io
+  annotations:
+    # TLS terminates at the external Nginx, which already enforces HTTPS.
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
   tls:
     secretName: avelys-io-tls
 
