@@ -30,8 +30,12 @@ LABEL org.opencontainers.image.title="Avelys web" \
       org.opencontainers.image.description="Avelys landing page" \
       org.opencontainers.image.version=$VERSION \
       org.opencontainers.image.revision=$VCS_REF
+COPY apps/web/nginx-main.conf /etc/nginx/nginx.conf
 COPY apps/web/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /workspace/apps/web/dist /usr/share/nginx/html
+RUN nginx -t
 EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD wget -qO- http://localhost:8080/healthz || exit 1
+ENTRYPOINT ["nginx"]
+CMD ["-g", "daemon off;"]

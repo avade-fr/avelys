@@ -4,7 +4,8 @@ services:
       context: .
       dockerfile: apps/web/Dockerfile
       args:
-        VITE_API_BASE_URL: /api
+        # The production ingress owns /api routing. Compose exposes the API directly.
+        VITE_API_BASE_URL: http://localhost:8000/api
         VITE_OIDC_AUTHORITY: ${VITE_OIDC_AUTHORITY:-}
         VITE_OIDC_CLIENT_ID: ${VITE_OIDC_CLIENT_ID:-avelys-web}
         VITE_OIDC_REDIRECT_URI: ${VITE_OIDC_REDIRECT_URI:-http://localhost:8080/auth/callback}
