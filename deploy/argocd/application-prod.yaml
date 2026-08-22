@@ -15,7 +15,7 @@ spec:
         - ../environments/prod.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: avelys
+    namespace: avelys-prod
   syncPolicy:
     automated:
       prune: true

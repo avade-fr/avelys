@@ -6,7 +6,7 @@ registryCredentials:
   name: avelys-prod-registry
   annotations:
     argocd.argoproj.io/tracking-id: >-
-      avelys-prod:secrets.hashicorp.com/VaultStaticSecret:avelys/avelys-prod-registry
+      avelys-prod:secrets.hashicorp.com/VaultStaticSecret:avelys-prod/avelys-prod-registry
     argocd.argoproj.io/sync-wave: "-1"
   mount: secret
   path: avelys-prod/registry

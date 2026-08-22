@@ -45,7 +45,7 @@ This is useful for the first smoke test before handing reconciliation to Argo CD
 
 ```bash
 helm upgrade --install avelys deploy/helm/avelys \
-  --namespace avelys \
+  --namespace avelys-prod \
   --create-namespace \
   --values deploy/helm/environments/prod.yaml \
   --set-string web.image.repository="dtr.admin.avade.fr/avelys/web" \
@@ -55,8 +55,8 @@ helm upgrade --install avelys deploy/helm/avelys \
 Check the release:
 
 ```bash
-kubectl -n avelys rollout status deployment/avelys-web
-kubectl -n avelys get ingress,pods,services
+kubectl -n avelys-prod rollout status deployment/avelys-web
+kubectl -n avelys-prod get ingress,pods,services
 curl --fail --show-error https://avelys.io/healthz
 ```
 
@@ -70,5 +70,5 @@ Before applying `deploy/argocd/application-prod.yaml`:
 4. Commit and push those changes, then create the Argo CD Application.
 
 The `Application` resource lives in `argo-cd`. Argo CD will render the same chart and
-continuously reconcile the automatically created `avelys` namespace. Do not run direct
-Helm upgrades after Argo CD takes ownership.
+continuously reconcile the automatically created `avelys-prod` namespace. Do not run
+direct Helm upgrades after Argo CD takes ownership.
