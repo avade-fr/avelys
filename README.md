@@ -18,6 +18,7 @@ deploy/
 docs/
   architecture.md      Boundaries and technical decisions
   keycloak.md          Realm/client configuration checklist
+  web/implementation.md Landing-page design and implementation decisions
 compose.yaml           Local production-like stack
 ```
 
