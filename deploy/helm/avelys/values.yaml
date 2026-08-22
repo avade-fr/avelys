@@ -1,0 +1,111 @@
+nameOverride: ""
+fullnameOverride: ""
+
+imagePullSecrets: []
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+web:
+  replicaCount: 2
+  image:
+    repository: dtr.admin.avade.fr/avelys/web
+    pullPolicy: IfNotPresent
+    tag: "0.1.0"
+  runtimeConfig:
+    apiBaseUrl: /api
+    oidcAuthority: ""
+    oidcClientId: avelys-web
+    oidcRedirectUri: ""
+    oidcPostLogoutRedirectUri: ""
+  service:
+    port: 80
+    targetPort: 8080
+  resources:
+    requests:
+      cpu: 25m
+      memory: 32Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
+  podAnnotations: {}
+  podSecurityContext:
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+  securityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop: ["ALL"]
+    readOnlyRootFilesystem: true
+    runAsUser: 101
+
+api:
+  enabled: false
+  replicaCount: 2
+  image:
+    repository: dtr.admin.avade.fr/avelys/api
+    pullPolicy: IfNotPresent
+    tag: "0.1.0"
+  config:
+    appEnv: production
+    logLevel: INFO
+    corsOrigins: ""
+    authEnabled: true
+    oidcIssuerUrl: ""
+    oidcJwksUrl: ""
+    oidcAudience: avelys-api
+  # Optional Secret whose keys are imported as API environment variables.
+  existingSecret: ""
+  service:
+    port: 80
+    targetPort: 8000
+  resources:
+    requests:
+      cpu: 50m
+      memory: 96Mi
+    limits:
+      cpu: 500m
+      memory: 384Mi
+  podAnnotations: {}
+  podSecurityContext:
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+  securityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop: ["ALL"]
+    readOnlyRootFilesystem: true
+    runAsUser: 10001
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations: {}
+  host: avelys.io
+  tls:
+    enabled: true
+    secretName: avelys-io-tls
+
+autoscaling:
+  web:
+    enabled: false
+    minReplicas: 2
+    maxReplicas: 6
+    targetCPUUtilizationPercentage: 75
+  api:
+    enabled: false
+    minReplicas: 2
+    maxReplicas: 8
+    targetCPUUtilizationPercentage: 75
+
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

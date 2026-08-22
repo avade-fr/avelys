@@ -1,0 +1,28 @@
+web:
+  image:
+    repository: dtr.admin.avade.fr/avelys/web
+    # Production tags must be exact Git tags; update this during the release commit.
+    tag: "0.1.0"
+  runtimeConfig:
+    oidcAuthority: ""
+
+api:
+  enabled: false
+  image:
+    repository: dtr.admin.avade.fr/avelys/api
+    tag: "0.1.0"
+  config:
+    appEnv: production
+    corsOrigins: https://avelys.io
+    authEnabled: true
+    oidcIssuerUrl: ""
+    oidcAudience: avelys-api
+
+ingress:
+  host: avelys.io
+  tls:
+    secretName: avelys-io-tls
+
+autoscaling:
+  api:
+    enabled: false

@@ -1,0 +1,12 @@
+{
+  "name": "avelys",
+  "private": true,
+  "packageManager": "pnpm@10.15.0",
+  "scripts": {
+    "dev": "pnpm --filter @avelys/web dev",
+    "build": "pnpm --filter @avelys/web build",
+    "typecheck": "pnpm --filter @avelys/web typecheck",
+    "lint": "pnpm --filter @avelys/web lint"
+  }
+}
+

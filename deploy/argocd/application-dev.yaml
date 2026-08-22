@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: avelys-dev
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://git.example.com/platform/avelys.git
+    targetRevision: main
+    path: deploy/helm/avelys
+    helm:
+      releaseName: avelys
+      valueFiles:
+        - ../environments/dev.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: avelys-dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+

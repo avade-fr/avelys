@@ -1,0 +1,2 @@
+"""Avelys API package."""
+
