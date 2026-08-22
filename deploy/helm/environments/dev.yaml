@@ -1,3 +1,16 @@
+imagePullSecrets:
+  - name: registry
+
+registryCredentials:
+  enabled: true
+  name: avelys-dev-registry
+  annotations:
+    argocd.argoproj.io/tracking-id: >-
+      avelys-dev:secrets.hashicorp.com/VaultStaticSecret:avelys-dev/avelys-dev-registry
+    argocd.argoproj.io/sync-wave: "-1"
+  mount: secret
+  path: avelys-dev/registry
+
 web:
   replicaCount: 1
   image:

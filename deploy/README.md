@@ -8,8 +8,10 @@ The API remains disabled until the customer area is ready.
 - `avelys.io` DNS points to the Kubernetes ingress entry point.
 - The namespace contains a TLS Secret named `avelys-io-tls`, or the ingress annotations
   are configured for your certificate manager.
-- Kubernetes can pull from DTR. Add the relevant Secret under `imagePullSecrets` when
-  DTR does not provide cluster-wide credentials.
+- The HashiCorp Vault Secrets Operator and `VaultStaticSecret` CRD are installed.
+- Vault KV paths `avelys-prod/registry` and `avelys-dev/registry` exist under the `secret`
+  mount and contain a valid `.dockerconfigjson` entry for DTR.
+- The Vault Secrets Operator is authorized to read those paths.
 
 ## Build and push
 
@@ -62,9 +64,9 @@ curl --fail --show-error https://avelys.io/healthz
 
 Before applying `deploy/argocd/application-prod.yaml`:
 
-1. Replace its `repoURL` with this repository's real Git URL.
+1. Confirm Argo CD has SSH credentials for `git@github.com:avade-fr/avelys.git`.
 2. Put the immutable release tag in `deploy/helm/environments/prod.yaml`.
-3. Configure `imagePullSecrets` if required.
+3. Confirm the Vault registry path and operator access for the target environment.
 4. Commit and push those changes, then create the Argo CD Application.
 
 The `Application` resource lives in `argo-cd`. Argo CD will render the same chart and

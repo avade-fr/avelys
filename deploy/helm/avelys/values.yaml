@@ -3,6 +3,19 @@ fullnameOverride: ""
 
 imagePullSecrets: []
 
+registryCredentials:
+  enabled: false
+  name: ""
+  annotations: {}
+  mount: secret
+  path: ""
+  type: kv-v2
+  destination:
+    create: true
+    name: registry
+    overwrite: true
+    type: kubernetes.io/dockerconfigjson
+
 serviceAccount:
   create: true
   annotations: {}
