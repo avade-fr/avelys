@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: avelys-prod
-  namespace: argocd
+  namespace: argo-cd
 spec:
   project: default
   source:
@@ -15,7 +15,7 @@ spec:
         - ../environments/prod.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: avelys-prod
+    namespace: avelys
   syncPolicy:
     automated:
       prune: true
