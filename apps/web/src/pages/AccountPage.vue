@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import { auth } from '@/auth'
 
@@ -11,6 +12,7 @@ type Profile = {
 
 const profile = ref<Profile | null>(null)
 const error = ref('')
+const { t } = useI18n()
 
 onMounted(async () => {
   const token = auth.accessToken()
@@ -24,7 +26,7 @@ onMounted(async () => {
     if (!response.ok) throw new Error(`API returned ${response.status}`)
     profile.value = await response.json() as Profile
   } catch {
-    error.value = 'Your profile could not be loaded.'
+    error.value = t('auth.profileError')
   }
 })
 </script>
@@ -32,12 +34,12 @@ onMounted(async () => {
 <template>
   <section class="account page-width">
     <div>
-      <p class="eyebrow">Private customer area</p>
-      <h1>Welcome{{ profile?.name ? `, ${profile.name}` : '' }}.</h1>
+      <p class="eyebrow">{{ t('auth.privateArea') }}</p>
+      <h1>{{ t('auth.welcome') }}{{ profile?.name ? `, ${profile.name}` : '' }}.</h1>
       <p v-if="error" class="notice">{{ error }}</p>
-      <p v-else-if="!profile">Loading your secure profile…</p>
+      <p v-else-if="!profile">{{ t('auth.loading') }}</p>
       <p v-else>{{ profile.email }}</p>
     </div>
-    <button class="text-link" type="button" @click="auth.logout()">Sign out →</button>
+    <button class="text-link" type="button" @click="auth.logout()">{{ t('auth.signOut') }} →</button>
   </section>
 </template>

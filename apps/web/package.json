@@ -1,6 +1,6 @@
 {
   "name": "@avelys/web",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "type": "module",
   "scripts": {
@@ -13,6 +13,7 @@
   "dependencies": {
     "oidc-client-ts": "^3.3.0",
     "vue": "^3.5.18",
+    "vue-i18n": "^11.1.12",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {

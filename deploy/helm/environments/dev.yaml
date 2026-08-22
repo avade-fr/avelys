@@ -15,7 +15,7 @@ web:
   replicaCount: 1
   image:
     repository: dtr.admin.avade.fr/avelys/web
-    tag: COMMIT_bf127ec5
+    tag: v1.0.1
   runtimeConfig:
     oidcAuthority: ""
 

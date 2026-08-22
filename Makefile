@@ -7,9 +7,12 @@ GIT_TAG := $(shell git describe --exact-match --tags HEAD 2>/dev/null)
 DEFAULT_IMAGE_TAG := $(if $(GIT_TAG),$(GIT_TAG),$(if $(GIT_SHA),COMMIT_$(GIT_SHA),))
 IMAGE_TAG ?= $(DEFAULT_IMAGE_TAG)
 
-.PHONY: dev build test lint helm-check check-image-tag check-release-tag web-image web-push web-release image-ref
+.PHONY: dev local build test lint helm-check check-image-tag check-release-tag web-image web-push web-release image-ref
 
 dev:
+	docker compose -f compose.yaml -f compose.dev.yaml up --build
+
+local:
 	docker compose up --build
 
 build:

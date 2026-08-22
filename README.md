@@ -21,18 +21,23 @@ docs/
 compose.yaml           Local production-like stack
 ```
 
-## Run locally
+## Run locally with hot reload
 
-Docker is the only required tool for the complete stack:
+Docker is the only required tool for the complete stack. Start the Vite development
+server and API with:
 
 ```bash
 cp .env.example .env
-docker compose up --build
+make dev
 ```
 
-- Website: <http://localhost:8080>
+- Website: <http://localhost:5173>
 - API documentation: <http://localhost:8000/api/docs>
 - Liveness: <http://localhost:8000/health/live>
+
+Changes under `apps/web/src` and `apps/web/public` are reflected immediately in the
+browser. To run the production-like Nginx build locally instead, use `make local`; it is
+served at <http://localhost:8080>.
 
 Authentication is disabled by default for local API development. To exercise the real
 login flow, set the `OIDC_*` and `VITE_OIDC_*` values in `.env`, enable authentication,
