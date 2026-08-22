@@ -17,26 +17,17 @@ web:
     repository: dtr.admin.avade.fr/avelys/web
     tag: dev
   runtimeConfig:
-    oidcAuthority: https://sso.dev.example.com/realms/avelys
-    oidcClientId: avelys-web
-    oidcRedirectUri: https://avelys.dev.example.com/auth/callback
-    oidcPostLogoutRedirectUri: https://avelys.dev.example.com/
+    oidcAuthority: ""
 
 api:
-  enabled: true
-  replicaCount: 1
-  image:
-    repository: dtr.admin.avade.fr/avelys/api
-    tag: dev
-  config:
-    appEnv: development
-    corsOrigins: https://avelys.dev.example.com
-    authEnabled: true
-    oidcIssuerUrl: https://sso.dev.example.com/realms/avelys
-    oidcAudience: avelys-api
+  enabled: false
 
 ingress:
-  host: avelys.dev.example.com
+  host: dev.avelys.io
+  annotations:
+    # TLS terminates at the external Nginx, which already enforces HTTPS.
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
   tls:
     secretName: avelys-dev-tls
 

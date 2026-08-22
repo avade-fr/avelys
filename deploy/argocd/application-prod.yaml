@@ -5,6 +5,7 @@ metadata:
   namespace: argo-cd
 spec:
   project: default
+  revisionHistoryLimit: 10
   source:
     repoURL: git@github.com:avade-fr/avelys.git
     targetRevision: master
@@ -18,7 +19,21 @@ spec:
     namespace: avelys-prod
   syncPolicy:
     automated:
+      allowEmpty: false
       prune: true
       selfHeal: true
+    managedNamespaceMetadata:
+      labels:
+        app.kubernetes.io/part-of: avelys
+        environment: production
     syncOptions:
       - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m

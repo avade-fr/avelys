@@ -26,8 +26,8 @@ make web-push
 For a production release, tag the release commit and use the guarded release target:
 
 ```bash
-git tag 0.1.0
-git push origin 0.1.0
+git tag v1.0.0
+git push origin v1.0.0
 make web-release
 ```
 
