@@ -1,8 +1,8 @@
 web:
   image:
     repository: dtr.admin.avade.fr/avelys/web
-    # Production tags must be exact Git tags; update this during the release commit.
-    tag: "0.1.0"
+    # Commit tags are suitable for previews; formal releases use an exact Git tag.
+    tag: COMMIT_6cf5bf9e
   runtimeConfig:
     oidcAuthority: ""
 
