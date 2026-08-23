@@ -1,7 +1,7 @@
 # Web implementation notes
 
 This document records the product and implementation decisions behind the Avelys public
-landing page as of release `v1.0.2`.
+landing page as of release `v1.0.3`.
 
 ## Product position
 
