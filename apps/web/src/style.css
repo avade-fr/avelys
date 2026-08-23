@@ -268,7 +268,7 @@ nav > a:not(.button):not(.header-auth-button):hover::after { transform: scaleX(1
 
 .site-footer { padding-block: 52px; color: #94a9bd; background: #001a43; }
 .footer-inner { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 46px; }
-.footer-inner img { width: 146px; filter: brightness(0) invert(1); opacity: 0.9; }
+.footer-inner img { width: 146px; height: auto; filter: brightness(0) invert(1); opacity: 0.9; }
 .footer-inner p, .footer-inner small { margin: 0; font-size: 0.78rem; }
 
 .centered-page { display: grid; min-height: 65vh; place-items: center; text-align: center; }
