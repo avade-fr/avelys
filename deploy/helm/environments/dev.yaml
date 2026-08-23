@@ -18,7 +18,7 @@ web:
   replicaCount: 1
   image:
     repository: dtr.admin.avade.fr/avelys/web
-    tag: COMMIT_f858ec83
+    tag: COMMIT_56944099
   runtimeConfig:
     apiBaseUrl: https://dev-api.avelys.io/v1
 
