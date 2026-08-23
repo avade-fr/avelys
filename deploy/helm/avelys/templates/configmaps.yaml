@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "avelys.labels" . | nindent 4 }}
 data:
-  config.js: |
+  runtime-config.js: |
     window.__APP_CONFIG__ = {
       apiBaseUrl: {{ .Values.web.runtimeConfig.apiBaseUrl | quote }},
       oidcAuthority: {{ .Values.oidc.issuerUrl | quote }},

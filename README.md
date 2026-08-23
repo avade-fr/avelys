@@ -85,7 +85,7 @@ URL before deploying.
 For now, build and push only the immutable `web` image to DTR. Update its tag in the
 production values file and let Argo CD reconcile the Helm release. The `api` chart module
 is disabled in production until the customer area is introduced. The web image reads
-`config.js` from a Helm-managed ConfigMap at runtime, so later OIDC and API URLs will not
+`runtime-config.js` from a Helm-managed ConfigMap at runtime, so later OIDC and API URLs will not
 require rebuilding the image.
 
 Database and object storage are intentionally not selected yet. Their clients belong in

@@ -45,8 +45,8 @@ spec:
               containerPort: {{ .Values.web.service.targetPort }}
           volumeMounts:
             - name: runtime-config
-              mountPath: /usr/share/nginx/html/config.js
-              subPath: config.js
+              mountPath: /usr/share/nginx/html/runtime-config.js
+              subPath: runtime-config.js
               readOnly: true
             - name: nginx-cache
               mountPath: /var/cache/nginx

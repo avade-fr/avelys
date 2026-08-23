@@ -70,7 +70,7 @@ cookies are restricted.
 ## Runtime configuration and Helm
 
 Use Helm as the single source of environment configuration. Keep the web's runtime
-`/config.js`, because it already allows one immutable web image to be promoted between
+`/runtime-config.js`, because it already allows one immutable web image to be promoted between
 environments without making rendering depend on API availability or CORS.
 
 Prefer shared chart values rather than separate web and API copies:
@@ -88,7 +88,7 @@ web:
 
 The chart derives:
 
-- web `oidcAuthority` and `oidcClientId` in `/config.js`;
+- web `oidcAuthority` and `oidcClientId` in `/runtime-config.js`;
 - API `OIDC_ISSUER_URL` and `OIDC_AUDIENCE` environment variables;
 - callback and post-logout URIs from `window.location.origin` plus fixed paths.
 
