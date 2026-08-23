@@ -15,7 +15,7 @@ The client portal callback belongs to the web application:
 | --- | --- | --- | --- |
 | Production | `https://avelys.io/oauth2-redirect` | `https://api.avelys.io/v1` | `https://auth.avade.fr/realms/avelys` |
 | Development | `https://dev.avelys.io/oauth2-redirect` | `https://dev-api.avelys.io/v1` | `https://auth.avade.fr/realms/avelys-dev` |
-| Local | `http://localhost:5173/oauth2-redirect` | `http://localhost:8000/api/v1` | `http://localhost:7000/realms/avelys` |
+| Local | `http://localhost:5173/oauth2-redirect` | `http://localhost:8000/v1` | `http://localhost:7000/realms/avelys` |
 
 `/oauth2-redirect` is an SPA route served by the web container's history fallback. It
 must not redirect to Swagger UI. Swagger's OAuth callback is a separate integration,
@@ -132,7 +132,8 @@ origin. It may initially share the `avelys-web` Keycloak client when it uses the
 scopes, audience, and access policy. Register exact callback URLs:
 
 - `https://api.avelys.io/v1/docs/oauth2-redirect`;
-- `https://dev-api.avelys.io/v1/docs/oauth2-redirect`.
+- `https://dev-api.avelys.io/v1/docs/oauth2-redirect`;
+- `http://localhost:8000/v1/docs/oauth2-redirect` for local development.
 
 The portal still uses its callback on the web origin; Swagger's callback cannot complete
 a portal login. If Swagger later receives broader developer or administrator access,
@@ -144,10 +145,10 @@ deployment decision; the API currently disables documentation in production.
 
 1. **Swagger callback versus portal callback:** they are callbacks for different browser
    applications. Use the web callback for Connect and the API callback only for Swagger.
-2. **API-host migration:** the repository currently exposes `/api/v1` and `/api/docs` on
-   the web host. Moving to dedicated API hosts and `/v1` requires coordinated FastAPI,
-   ingress, CORS, web configuration, and test changes; avoid relying on an ingress rewrite
-   that makes generated OpenAPI URLs inconsistent.
+2. **API-host migration:** FastAPI and the web client now use `/v1` without an ingress
+   rewrite, keeping generated OpenAPI URLs consistent. Deployed environments use their
+   dedicated API origins; enable the API workload only after its image and external routing
+   are available.
 3. **Audience is not yet demonstrated:** before rollout, inspect a real access token and
    prove that `aud` contains `avelys-api`. Login success alone does not prove the token is
    valid for this API.

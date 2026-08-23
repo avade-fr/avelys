@@ -20,8 +20,18 @@ spec:
     - host: {{ .Values.ingress.host | quote }}
       http:
         paths:
-          {{- if .Values.api.enabled }}
-          - path: /api
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "avelys.fullname" . }}-web
+                port:
+                  name: http
+    {{- if and .Values.api.enabled .Values.api.ingressHost }}
+    - host: {{ .Values.api.ingressHost | quote }}
+      http:
+        paths:
+          - path: /v1
             pathType: Prefix
             backend:
               service:
@@ -35,12 +45,5 @@ spec:
                 name: {{ include "avelys.fullname" . }}-api
                 port:
                   name: http
-          {{- end }}
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: {{ include "avelys.fullname" . }}-web
-                port:
-                  name: http
+    {{- end }}
 {{- end }}

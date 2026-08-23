@@ -1,8 +1,7 @@
 # Avelys
 
-Avelys is a monorepo for the public website, future authenticated customer space, Python
-API, and its Kubernetes delivery configuration. The current production release deploys
-only the landing page at `avelys.io`.
+Avelys is a monorepo for the public website, authenticated customer space, Python API,
+and its Kubernetes delivery configuration.
 
 ## Repository layout
 
@@ -11,7 +10,7 @@ apps/
   web/                 Vue 3 + TypeScript public site and customer UI
   api/                 FastAPI service and Keycloak token validation
 deploy/
-  README.md            Landing-page deployment runbook
+  README.md            Deployment runbook
   helm/avelys/         Reusable Kubernetes Helm chart
   helm/environments/   Environment-specific Helm values
   argocd/              Argo CD Application examples
@@ -34,7 +33,7 @@ make dev
 ```
 
 - Website: <http://localhost:5173>
-- API documentation: <http://localhost:8000/api/docs>
+- API documentation: <http://localhost:8000/v1/docs>
 - Liveness: <http://localhost:8000/health/live>
 
 Changes under `apps/web/src` and `apps/web/public` are reflected immediately in the
@@ -80,16 +79,15 @@ helm template avelys deploy/helm/avelys -f deploy/helm/environments/prod.yaml
 For a release, follow [the deployment runbook](deploy/README.md). OIDC environment,
 Keycloak, and troubleshooting steps are in the
 [OIDC operations runbook](docs/oidc-operations.md).
-The image repository is `dtr.admin.avade.fr/avelys/web`; replace the example Argo CD Git
-URL before deploying.
+The image repositories are `dtr.admin.avade.fr/avelys/web` and
+`dtr.admin.avade.fr/avelys/api`; replace the example Argo CD Git URL before deploying.
 
 ## Delivery model
 
-For now, build and push only the immutable `web` image to DTR. Update its tag in the
-production values file and let Argo CD reconcile the Helm release. The `api` chart module
-is disabled in production until the customer area is introduced. The web image reads
-`runtime-config.js` from a Helm-managed ConfigMap at runtime, so later OIDC and API URLs will not
-require rebuilding the image.
+Build and push the immutable `web` and `api` images to DTR with the same release tag. Update
+both tags in the environment values and let Argo CD reconcile the Helm release. The web
+image reads `runtime-config.js` from a Helm-managed ConfigMap at runtime, so later OIDC and
+API URL changes do not require rebuilding the image.
 
 Database and object storage are intentionally not selected yet. Their clients belong in
 the API, their credentials should be supplied through an existing Kubernetes Secret, and

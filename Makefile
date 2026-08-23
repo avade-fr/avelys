@@ -1,13 +1,14 @@
 DTR_REGISTRY ?= dtr.admin.avade.fr
 IMAGE_NAMESPACE ?= avelys
 WEB_IMAGE ?= $(DTR_REGISTRY)/$(IMAGE_NAMESPACE)/web
+API_IMAGE ?= $(DTR_REGISTRY)/$(IMAGE_NAMESPACE)/api
 
 GIT_SHA := $(shell git rev-parse --short=8 HEAD 2>/dev/null)
 GIT_TAG := $(shell git describe --exact-match --tags HEAD 2>/dev/null)
 DEFAULT_IMAGE_TAG := $(if $(GIT_TAG),$(GIT_TAG),$(if $(GIT_SHA),COMMIT_$(GIT_SHA),))
 IMAGE_TAG ?= $(DEFAULT_IMAGE_TAG)
 
-.PHONY: dev local build test lint helm-check check-image-tag check-release-tag web-image web-push web-release image-ref
+.PHONY: dev local build test lint helm-check check-image-tag check-release-tag web-image web-push web-release api-image api-push api-release release image-ref
 
 dev:
 	docker compose -f compose.yaml -f compose.dev.yaml up --build
@@ -27,6 +28,7 @@ check-release-tag:
 
 image-ref: check-image-tag
 	@echo "$(WEB_IMAGE):$(IMAGE_TAG)"
+	@echo "$(API_IMAGE):$(IMAGE_TAG)"
 
 web-image: check-image-tag
 	docker build \
@@ -41,6 +43,21 @@ web-push: web-image
 
 web-release: check-release-tag
 	$(MAKE) web-push IMAGE_TAG="$(GIT_TAG)"
+
+api-image: check-image-tag
+	docker build \
+		--file apps/api/Dockerfile \
+		--tag "$(API_IMAGE):$(IMAGE_TAG)" \
+		.
+
+api-push: api-image
+	docker push "$(API_IMAGE):$(IMAGE_TAG)"
+
+api-release: check-release-tag
+	$(MAKE) api-push IMAGE_TAG="$(GIT_TAG)"
+
+release: check-release-tag
+	$(MAKE) web-push api-push IMAGE_TAG="$(GIT_TAG)"
 
 test:
 	docker compose run --rm api-test

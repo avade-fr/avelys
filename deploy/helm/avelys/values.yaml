@@ -32,9 +32,9 @@ web:
   image:
     repository: dtr.admin.avade.fr/avelys/web
     pullPolicy: IfNotPresent
-    tag: "0.1.0"
+    tag: "1.1.0"
   runtimeConfig:
-    apiBaseUrl: /api/v1
+    apiBaseUrl: /v1
   service:
     port: 80
     targetPort: 8080
@@ -61,11 +61,12 @@ web:
 
 api:
   enabled: false
+  ingressHost: ""
   replicaCount: 2
   image:
     repository: dtr.admin.avade.fr/avelys/api
     pullPolicy: IfNotPresent
-    tag: "0.1.0"
+    tag: "1.1.0"
   config:
     appEnv: production
     logLevel: INFO

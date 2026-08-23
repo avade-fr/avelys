@@ -18,9 +18,17 @@ async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
 
 app = FastAPI(
     title=settings.app_name,
-    version="0.1.0",
-    docs_url="/api/docs" if settings.app_env != "production" else None,
-    openapi_url="/api/openapi.json" if settings.app_env != "production" else None,
+    version="1.1.0",
+    docs_url="/v1/docs" if settings.app_env != "production" else None,
+    openapi_url="/v1/openapi.json" if settings.app_env != "production" else None,
+    swagger_ui_oauth2_redirect_url=(
+        "/v1/docs/oauth2-redirect" if settings.app_env != "production" else None
+    ),
+    swagger_ui_init_oauth={
+        "clientId": settings.oidc_swagger_client_id,
+        "scopes": "openid profile email",
+        "usePkceWithAuthorizationCodeGrant": True,
+    },
     lifespan=lifespan,
 )
 

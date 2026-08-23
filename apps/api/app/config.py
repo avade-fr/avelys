@@ -20,6 +20,7 @@ class Settings(BaseSettings):
     oidc_issuer_url: str = ""
     oidc_jwks_url: str = ""
     oidc_audience: str = "avelys-api"
+    oidc_swagger_client_id: str = "avelys-web"
 
     @field_validator("oidc_issuer_url")
     @classmethod
@@ -33,6 +34,18 @@ class Settings(BaseSettings):
         if self.oidc_issuer_url:
             return f"{self.oidc_issuer_url}/protocol/openid-connect/certs"
         return ""
+
+    @property
+    def oidc_authorization_url(self) -> str:
+        if not self.oidc_issuer_url:
+            return "/oauth2/authorize"
+        return f"{self.oidc_issuer_url}/protocol/openid-connect/auth"
+
+    @property
+    def oidc_token_url(self) -> str:
+        if not self.oidc_issuer_url:
+            return "/oauth2/token"
+        return f"{self.oidc_issuer_url}/protocol/openid-connect/token"
 
     @property
     def cors_origin_list(self) -> list[str]:

@@ -8,7 +8,7 @@ RUN pnpm install --filter @avelys/web... --frozen-lockfile=false
 
 COPY apps/web apps/web
 
-ARG VITE_API_BASE_URL=/api/v1
+ARG VITE_API_BASE_URL=/v1
 ARG VITE_OIDC_AUTHORITY
 ARG VITE_OIDC_CLIENT_ID=avelys-web
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL \

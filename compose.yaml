@@ -4,8 +4,8 @@ services:
       context: .
       dockerfile: apps/web/Dockerfile
       args:
-        # The production ingress owns /api routing. Compose exposes the API directly.
-        VITE_API_BASE_URL: http://localhost:8000/api/v1
+        # Compose exposes the API directly; deployed environments use dedicated API origins.
+        VITE_API_BASE_URL: http://localhost:8000/v1
         VITE_OIDC_AUTHORITY: ${VITE_OIDC_AUTHORITY:-http://localhost:7000/realms/avelys}
         VITE_OIDC_CLIENT_ID: ${VITE_OIDC_CLIENT_ID:-avelys-web}
     ports:
@@ -24,6 +24,7 @@ services:
       OIDC_ISSUER_URL: ${OIDC_ISSUER_URL:-http://localhost:7000/realms/avelys}
       OIDC_JWKS_URL: ${OIDC_JWKS_URL:-http://keycloak:7000/realms/avelys/protocol/openid-connect/certs}
       OIDC_AUDIENCE: ${OIDC_AUDIENCE:-avelys-api}
+      OIDC_SWAGGER_CLIENT_ID: ${OIDC_SWAGGER_CLIENT_ID:-avelys-web}
       CORS_ORIGINS: http://localhost:8080,http://localhost:5173
     ports:
       - "8000:8000"

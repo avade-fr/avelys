@@ -16,9 +16,9 @@ flowchart LR
   K8s --> API
 ```
 
-The ingress sends `/api` and `/health` to FastAPI and all other paths to the Vue/Nginx
-container. The API is the security and data boundary; the browser never talks directly
-to a database or storage service.
+The dedicated API origin sends `/v1` and `/health` to FastAPI, while the web origin sends
+SPA traffic to the Vue/Nginx container. The API is the security and data boundary; the
+browser never talks directly to a database or storage service.
 
 ## Module boundaries
 
@@ -34,7 +34,7 @@ to a database or storage service.
 ### `apps/api`
 
 - FastAPI with Pydantic settings.
-- Public health endpoints and versioned customer endpoints under `/api/v1`.
+- Public health endpoints and versioned customer endpoints under `/v1`.
 - Access tokens are validated against Keycloak JWKS, issuer, signature, expiry, and API
   audience. UI route guards are convenience only; API authorization is authoritative.
 - Database and object-storage adapters should be created behind service/repository

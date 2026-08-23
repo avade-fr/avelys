@@ -27,4 +27,5 @@ data:
   OIDC_ISSUER_URL: {{ .Values.oidc.issuerUrl | quote }}
   OIDC_JWKS_URL: {{ .Values.oidc.jwksUrl | quote }}
   OIDC_AUDIENCE: {{ .Values.oidc.apiAudience | quote }}
+  OIDC_SWAGGER_CLIENT_ID: {{ .Values.oidc.webClientId | quote }}
 {{- end }}

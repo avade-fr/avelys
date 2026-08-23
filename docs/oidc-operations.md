@@ -35,7 +35,7 @@ Helm values, Compose variables, the Vue build, or `runtime-config.js`.
 | --- | --- | --- |
 | Production | `https://auth.avade.fr/realms/avelys` | `https://api.avelys.io/v1` |
 | Development | `https://auth.avade.fr/realms/avelys-dev` | `https://dev-api.avelys.io/v1` |
-| Local browser | `http://localhost:7000/realms/avelys` | `http://localhost:8000/api/v1` |
+| Local browser | `http://localhost:7000/realms/avelys` | `http://localhost:8000/v1` |
 
 Local values live in `compose.yaml` and `compose.dev.yaml`. The browser uses the host URL
 `localhost:7000`. The API container uses the same issuer but overrides the JWKS URL with
@@ -76,6 +76,11 @@ registered:
 
 - `https://api.avelys.io/v1/docs/oauth2-redirect`
 - `https://dev-api.avelys.io/v1/docs/oauth2-redirect`
+- `http://localhost:8000/v1/docs/oauth2-redirect`
+
+Add each corresponding API origin to the client's exact web origins as well. For local
+Swagger UI, that is `http://localhost:8000`; Keycloak needs it to allow the browser's token
+exchange request.
 
 Create a separate Swagger client only if its permissions or access policy diverge from
 the portal. Its callback cannot replace the web portal callback because browser session
@@ -108,8 +113,9 @@ does require a new immutable image tag.
 1. Choose `vX.Y.Z` and update all of the following together:
 
    - `apps/web/package.json` version;
+   - `apps/api/pyproject.toml` version;
    - `deploy/helm/avelys/Chart.yaml` `version` and `appVersion`;
-   - `web.image.tag` in the environment files being promoted.
+   - `web.image.tag` and `api.image.tag` in the environment files being promoted.
 
 2. Rebuild and validate the exact sources:
 
@@ -125,20 +131,20 @@ does require a new immutable image tag.
    pushing Git:
 
    ```bash
-   git add apps/web/package.json \
+   git add apps/web/package.json apps/api/pyproject.toml \
      deploy/helm/avelys/Chart.yaml \
      deploy/helm/environments/dev.yaml \
      deploy/helm/environments/prod.yaml
-   git commit -m "Release Avelys web vX.Y.Z"
+   git commit -m "Release Avelys vX.Y.Z"
    git tag -a vX.Y.Z -m "Avelys vX.Y.Z"
-   make web-release
+   make release
    git push origin master vX.Y.Z
    ```
 
-Publishing the image first prevents Argo CD from observing a Helm image tag that does not
-yet exist. `make web-release` refuses to run unless `HEAD` has an exact Git tag.
+Publishing both images first prevents Argo CD from observing a Helm image tag that does not
+yet exist. `make release` refuses to run unless `HEAD` has an exact Git tag.
 
-For a development-only commit image, `make web-push` creates a
+For development-only commit images, `make web-push` and `make api-push` create a
 `COMMIT_<8-character-sha>` tag. Put that exact tag only in the development values and push
 the values commit. Formal production releases use the annotated `vX.Y.Z` tag.
 

@@ -1,11 +1,12 @@
-# Deploying the landing page
+# Deploying Avelys
 
-The production Helm values deploy only the Vue/Nginx landing page at `avelys.io`.
-The API remains disabled until the customer area is ready.
+The Helm release deploys the Vue/Nginx application and authenticated FastAPI service.
+The API is exposed on its dedicated environment hostname.
 
 ## Prerequisites
 
-- `avelys.io` DNS points to the Kubernetes ingress entry point.
+- The web and API DNS names (`avelys.io` / `api.avelys.io`, and their development
+  equivalents) point to the Kubernetes ingress entry point.
 - The namespace contains a TLS Secret named `avelys-io-tls`, or the ingress annotations
   are configured for your certificate manager.
 - The HashiCorp Vault Secrets Operator and `VaultStaticSecret` CRD are installed.
@@ -21,25 +22,27 @@ is used instead. Build and push the current revision with:
 ```bash
 make image-ref
 make web-push
+make api-push
 ```
 
 For a production release, tag the release commit and use the guarded release target:
 
 ```bash
 git tag -a vX.Y.Z -m "Avelys vX.Y.Z"
-make web-release
+make release
 git push origin master vX.Y.Z
 ```
 
-`make web-release` fails unless `HEAD` has an exact Git tag. `make web-push` can also be
-used outside a Git checkout by explicitly passing `IMAGE_TAG`, but this should not be used
-for normal CI releases:
+`make release` fails unless `HEAD` has an exact Git tag. The individual push targets can
+also be used outside a Git checkout by explicitly passing `IMAGE_TAG`, but this should not
+be used for normal CI releases:
 
 ```bash
 make web-push IMAGE_TAG=temporary-test
+make api-push IMAGE_TAG=temporary-test
 ```
 
-Publish the image before pushing the release commit and tag. This prevents Argo CD from
+Publish both images before pushing the release commit and tag. This prevents Argo CD from
 reconciling an image reference that does not exist yet. The complete OIDC configuration
 and release procedure is in [the OIDC operations runbook](../docs/oidc-operations.md).
 
@@ -53,15 +56,19 @@ helm upgrade --install avelys deploy/helm/avelys \
   --create-namespace \
   --values deploy/helm/environments/prod.yaml \
   --set-string web.image.repository="dtr.admin.avade.fr/avelys/web" \
-  --set-string web.image.tag="$(git describe --exact-match --tags HEAD)"
+  --set-string web.image.tag="$(git describe --exact-match --tags HEAD)" \
+  --set-string api.image.repository="dtr.admin.avade.fr/avelys/api" \
+  --set-string api.image.tag="$(git describe --exact-match --tags HEAD)"
 ```
 
 Check the release:
 
 ```bash
 kubectl -n avelys-prod rollout status deployment/avelys-web
+kubectl -n avelys-prod rollout status deployment/avelys-api
 kubectl -n avelys-prod get ingress,pods,services
 curl --fail --show-error https://avelys.io/healthz
+curl --fail --show-error https://api.avelys.io/health/ready
 ```
 
 ## Argo CD handoff

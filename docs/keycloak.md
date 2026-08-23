@@ -21,12 +21,22 @@ Swagger UI may use the same public client while it has the same API permissions,
 exact API-origin callback must be registered separately. Give Swagger a dedicated client
 if its scopes or access policy diverge from the portal.
 
+For local Swagger UI, also register:
+
+- Valid redirect URI: `http://localhost:8000/v1/docs/oauth2-redirect`.
+- Web origin: `http://localhost:8000`.
+
 No client secret belongs in Vue or Helm runtime configuration.
 
 ## API audience: `avelys-api`
 
 The access token consumed by FastAPI must contain `avelys-api` in its `aud` claim. Add a
 Keycloak audience mapper or client scope to the browser client so that audience is present.
+For a client-specific mapper, open **Clients → avelys-web → Client scopes →
+avelys-web-dedicated**, add an **Audience** mapper, set **Included Custom Audience** to
+`avelys-api`, enable **Add to access token**, and leave **Add to ID token** disabled. Obtain
+a new token after saving; existing tokens are not changed.
+
 The API validates:
 
 - RS256 signature using the realm JWKS endpoint;

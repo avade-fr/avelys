@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 from app.auth import CurrentClaims
 
-router = APIRouter(prefix="/api/v1", tags=["customer"])
+router = APIRouter(prefix="/v1", tags=["customer"])
 
 
 class CustomerProfile(BaseModel):
@@ -19,4 +19,3 @@ def get_profile(claims: CurrentClaims) -> CustomerProfile:
         email=claims.get("email"),
         name=claims.get("name") or claims.get("preferred_username"),
     )
-

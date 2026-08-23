@@ -80,7 +80,7 @@ make dev
 
 - Vite website: <http://localhost:5173>
 - API: <http://localhost:8000>
-- API documentation: <http://localhost:8000/api/docs>
+- API documentation: <http://localhost:8000/v1/docs>
 
 Use `make local` for the production-like Nginx build at <http://localhost:8080>.
 
