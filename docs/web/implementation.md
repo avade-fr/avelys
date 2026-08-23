@@ -100,9 +100,9 @@ Releases use immutable Git and container tags. Bump the web package, Helm chart,
 annotated tag, push the image to DTR first, then atomically push `master` and the Git tag.
 This prevents Argo CD from reconciling an image tag that does not exist yet.
 
-Release `v1.0.2` is represented by:
+Release `v1.0.3` is represented by:
 
-- Git commit: `5a9a0c2`
-- Image: `dtr.admin.avade.fr/avelys/web:v1.0.2`
-- Image digest: `sha256:4388bedb64d7b4be2b388d78fe5620c8a42c4be88989e97b31f423df0d0a9602`
-- Dev and production Helm values pinned to `v1.0.2`
+- Git commit: `0ce3a02`
+- Image: `dtr.admin.avade.fr/avelys/web:v1.0.3`
+- Image digest: `sha256:3fdb488b1ddf2cf54f1d810b0af8eeea99c5fe56db65801ec2003289d8f41ad2`
+- Dev and production Helm values pinned to `v1.0.3`
