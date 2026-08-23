@@ -11,16 +11,21 @@ registryCredentials:
   mount: secret
   path: avelys-dev/registry
 
+oidc:
+  issuerUrl: https://auth.avade.fr/realms/avelys-dev
+
 web:
   replicaCount: 1
   image:
     repository: dtr.admin.avade.fr/avelys/web
     tag: v1.0.2
   runtimeConfig:
-    oidcAuthority: ""
+    apiBaseUrl: https://dev-api.avelys.io/v1
 
 api:
   enabled: false
+  config:
+    corsOrigins: https://dev.avelys.io
 
 ingress:
   host: dev.avelys.io

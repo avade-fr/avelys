@@ -40,9 +40,13 @@ Changes under `apps/web/src` and `apps/web/public` are reflected immediately in 
 browser. To run the production-like Nginx build locally instead, use `make local`; it is
 served at <http://localhost:8080>.
 
-Authentication is disabled by default for local API development. To exercise the real
-login flow, set the `OIDC_*` and `VITE_OIDC_*` values in `.env`, enable authentication,
-and configure the local redirect URIs in Keycloak.
+Local Compose development uses the Keycloak realm at
+`http://localhost:7000/realms/avelys` and enables API token validation by default. Its
+container must be attached to the external Docker network named `keycloak`, where it is
+reachable as `keycloak:7000`. Register `http://localhost:5173/oauth2-redirect` and
+`http://localhost:8080/oauth2-redirect`, their corresponding post-logout URLs, and both
+localhost web origins in the local Keycloak client. Set `AUTH_ENABLED=false` only when
+deliberately exercising the API without authentication.
 
 For native development, use Node 22 with pnpm 10 for `apps/web` and Python 3.11+ for
 `apps/api`.

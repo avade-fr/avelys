@@ -27,7 +27,8 @@ to a database or storage service.
 - Vue 3, TypeScript, Vite, and Vue Router.
 - Public landing content and the authenticated customer experience can evolve in one SPA.
 - `oidc-client-ts` implements OIDC Authorization Code with PKCE.
-- Runtime configuration is loaded from `/config.js`, mounted by Helm.
+- Runtime configuration is loaded from the non-cacheable `/config.js`, mounted by Helm
+  and derived from the same OIDC values used by the API.
 - Access tokens are kept in session storage and attached only to API requests.
 
 ### `apps/api`
@@ -69,4 +70,3 @@ to a database or storage service.
 
 These depend on product or platform constraints and do not need to be baked into the
 initial service boundaries.
-

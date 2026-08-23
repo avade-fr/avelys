@@ -6,22 +6,28 @@ const authority = runtimeConfig.oidcAuthority || import.meta.env.VITE_OIDC_AUTHO
 const configured = Boolean(authority)
 const currentUser = ref<User | null>(null)
 
+function safeReturnTo(value: unknown) {
+  if (typeof value !== 'string' || !value.startsWith('/') || value.startsWith('//')) {
+    return '/account'
+  }
+
+  const url = new URL(value, window.location.origin)
+  if (url.origin !== window.location.origin) return '/account'
+  return `${url.pathname}${url.search}${url.hash}`
+}
+
 const manager = configured
   ? new UserManager({
       authority,
       client_id: runtimeConfig.oidcClientId || import.meta.env.VITE_OIDC_CLIENT_ID || 'avelys-web',
-      redirect_uri:
-        runtimeConfig.oidcRedirectUri ||
-        import.meta.env.VITE_OIDC_REDIRECT_URI ||
-        `${window.location.origin}/auth/callback`,
-      post_logout_redirect_uri:
-        runtimeConfig.oidcPostLogoutRedirectUri ||
-        import.meta.env.VITE_OIDC_POST_LOGOUT_REDIRECT_URI ||
-        `${window.location.origin}/`,
+      redirect_uri: `${window.location.origin}/oauth2-redirect`,
+      post_logout_redirect_uri: `${window.location.origin}/`,
       response_type: 'code',
       scope: 'openid profile email',
+      disablePKCE: false,
       userStore: new WebStorageStateStore({ store: window.sessionStorage }),
       automaticSilentRenew: true,
+      monitorSession: false,
     })
   : null
 
@@ -54,7 +60,7 @@ export const auth = {
     const user = await manager.signinRedirectCallback()
     currentUser.value = user
     const state = user.state as { returnTo?: string } | undefined
-    return state?.returnTo ?? '/account'
+    return safeReturnTo(state?.returnTo)
   },
   async logout() {
     if (!manager) return

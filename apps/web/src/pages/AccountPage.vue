@@ -19,8 +19,8 @@ onMounted(async () => {
   if (!token) return
 
   try {
-    const apiBaseUrl = window.__APP_CONFIG__?.apiBaseUrl || import.meta.env.VITE_API_BASE_URL || '/api'
-    const response = await fetch(`${apiBaseUrl}/v1/me`, {
+    const apiBaseUrl = window.__APP_CONFIG__?.apiBaseUrl || import.meta.env.VITE_API_BASE_URL || '/api/v1'
+    const response = await fetch(`${apiBaseUrl}/me`, {
       headers: { Authorization: `Bearer ${token}` },
     })
     if (!response.ok) throw new Error(`API returned ${response.status}`)

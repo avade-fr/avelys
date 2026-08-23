@@ -187,7 +187,7 @@ const audiences = ['banks', 'servicers', 'funds', 'fintechs'] as const
 
   <footer class="site-footer">
     <div class="footer-inner page-width">
-      <img src="/avelys.io-logo.png" alt="Avelys.io" />
+      <img src="/avelys.io-logo.png" alt="Avelys.io" width="543" height="181" loading="lazy" decoding="async" />
       <p>{{ t('footer.tagline') }}</p>
       <small>© {{ new Date().getFullYear() }} Avelys.io — {{ t('footer.rights') }}</small>
     </div>

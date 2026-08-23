@@ -86,13 +86,52 @@ nav {
   font-size: 0.89rem;
   font-weight: 500;
 }
-nav > a:not(.button) { position: relative; padding-block: 8px; }
-nav > a:not(.button)::after { position: absolute; right: 0; bottom: 2px; left: 0; height: 1px; content: ''; background: var(--deep-turquoise); transform: scaleX(0); transform-origin: right; transition: transform 0.25s ease; }
-nav > a:not(.button):hover::after { transform: scaleX(1); transform-origin: left; }
+nav > a:not(.button):not(.header-auth-button) { position: relative; padding-block: 8px; }
+nav > a:not(.button):not(.header-auth-button)::after { position: absolute; right: 0; bottom: 2px; left: 0; height: 1px; content: ''; background: var(--deep-turquoise); transform: scaleX(0); transform-origin: right; transition: transform 0.25s ease; }
+nav > a:not(.button):not(.header-auth-button):hover::after { transform: scaleX(1); transform-origin: left; }
 
 .language-switcher { display: flex; align-items: center; gap: 5px; margin-left: auto; color: #8a9aaa; font-size: 0.72rem; }
 .language-switcher button { padding: 5px 2px; border: 0; color: #8a9aaa; background: transparent; cursor: pointer; }
 .language-switcher button.active { color: var(--navy); font-weight: 700; }
+
+.header-auth-button {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 6px 7px 6px 17px;
+  border: 1px solid rgba(0, 32, 83, 0.14);
+  border-radius: 999px;
+  color: var(--navy);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 5px 18px rgba(0, 32, 83, 0.06);
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.header-auth-button-icon {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--white);
+  background: var(--navy);
+  font-size: 0.92rem;
+  line-height: 1;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.header-auth-button:hover {
+  border-color: rgba(1, 126, 130, 0.42);
+  background: var(--white);
+  box-shadow: 0 9px 24px rgba(0, 32, 83, 0.1);
+  transform: translateY(-1px);
+}
+.header-auth-button:hover .header-auth-button-icon { background: var(--deep-turquoise); transform: translateX(2px); }
+.header-auth-button:focus-visible { outline: 3px solid rgba(1, 126, 130, 0.2); outline-offset: 3px; }
+.header-auth-button:disabled { cursor: not-allowed; opacity: 0.5; transform: none; }
 
 .menu-toggle { display: none; width: 42px; height: 42px; padding: 11px; border: 0; border-radius: 50%; background: var(--ice); }
 .menu-toggle span { display: block; width: 20px; height: 1px; margin-block: 5px; background: var(--navy); }
@@ -123,7 +162,7 @@ nav > a:not(.button):hover::after { transform: scaleX(1); transform-origin: left
 .text-link:hover span { transform: translateX(4px); }
 
 .hero { position: relative; min-height: 718px; overflow: hidden; background: #f7faff; }
-.hero-background { position: absolute; inset: 0; background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.99) 0%, rgba(255, 255, 255, 0.92) 32%, rgba(255, 255, 255, 0.08) 67%), url('/header-background.png'); background-position: center, center right; background-size: cover; }
+.hero-background { position: absolute; inset: 0; background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.99) 0%, rgba(255, 255, 255, 0.92) 32%, rgba(255, 255, 255, 0.08) 67%), url('/header-background.webp'); background-position: center, center right; background-size: cover; }
 .hero-background::after { position: absolute; inset: 0; content: ''; background: linear-gradient(180deg, transparent 70%, rgba(244, 248, 251, 0.7)); pointer-events: none; }
 .hero-inner { position: relative; z-index: 2; display: flex; min-height: 718px; align-items: center; }
 .hero-copy { width: min(610px, 52%); padding-block: 82px 104px; animation: hero-enter 0.75s ease both; }
@@ -249,7 +288,7 @@ nav > a:not(.button):hover::after { transform: scaleX(1); transform-origin: left
 @media (max-width: 1050px) {
   .page-width { width: min(100% - 44px, 1240px); }
   nav { gap: 18px; }
-  nav > a:not(.button) { display: none; }
+  nav > a:not(.button):not(.header-auth-button) { display: none; }
   .hero-copy { width: 60%; }
   .portfolio-card { right: 1%; width: 248px; }
   .capability-card { min-height: 365px; }
@@ -267,13 +306,14 @@ nav > a:not(.button):hover::after { transform: scaleX(1); transform-origin: left
   .menu-toggle { display: block; }
   nav { position: absolute; top: 72px; right: 0; left: 0; display: flex; max-height: 0; flex-direction: column; align-items: stretch; gap: 0; overflow: hidden; padding: 0 16px; background: rgba(255, 255, 255, 0.98); opacity: 0; transition: max-height 0.3s ease, opacity 0.2s ease, padding 0.3s ease; }
   nav.is-open { max-height: 510px; padding-block: 12px 24px; border-bottom: 1px solid var(--line); opacity: 1; box-shadow: 0 18px 30px rgba(0, 32, 83, 0.08); }
-  nav > a:not(.button) { display: block; padding: 14px 4px; border-bottom: 1px solid var(--line); }
-  nav > a:not(.button)::after { display: none; }
-  nav .button { margin-top: 12px; }
+  nav > a:not(.button):not(.header-auth-button) { display: block; padding: 14px 4px; border-bottom: 1px solid var(--line); }
+  nav > a:not(.button):not(.header-auth-button)::after { display: none; }
+  nav .button, nav .header-auth-button { margin-top: 12px; }
+  nav .header-auth-button { width: 100%; justify-content: space-between; padding-left: 18px; }
   .language-switcher { justify-content: flex-start; margin-left: 0; padding: 14px 4px 2px; }
 
   .hero { min-height: auto; }
-  .hero-background { background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.99) 0%, rgba(255, 255, 255, 0.91) 48%, rgba(255, 255, 255, 0.05) 79%), url('/header-background.png'); background-position: center, 63% bottom; background-size: auto, auto 60%; background-repeat: no-repeat; }
+  .hero-background { background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.99) 0%, rgba(255, 255, 255, 0.91) 48%, rgba(255, 255, 255, 0.05) 79%), url('/header-background.webp'); background-position: center, 63% bottom; background-size: auto, auto 60%; background-repeat: no-repeat; }
   .hero-inner { display: block; min-height: auto; padding-bottom: 34px; }
   .hero-copy { width: 100%; padding: 72px 0 18px; }
   .hero h1 { max-width: 530px; font-size: clamp(3rem, 13vw, 4rem); }

@@ -27,12 +27,13 @@ Source brand images live under `docs/web/images`. Runtime copies consumed by Vit
 under `apps/web/public`:
 
 - `avelys.io-logo.png`: complete header/footer wordmark
-- `header-background.png`: landing-page hero image
-- `favicon.png`: transparent square favicon derived from the Avelys “A” mark
+- `header-background.webp`: compressed landing-page hero image
+- `favicon.png`: 64 px transparent browser icon derived from the Avelys “A” mark
+- `apple-touch-icon.png`: 180 px high-resolution touch icon
 
-The current favicon master is a 1254 px RGBA PNG. If an official vector mark becomes
-available, replace it with an SVG favicon and optimized 32 px and 180 px raster variants
-to reduce transfer size while preserving exact brand geometry.
+The runtime wordmark is a 543 px transparent PNG, which provides more than 3x density at
+its largest rendered size. If official vector marks become available, replace the
+wordmark and favicon assets with SVG sources while preserving the raster Apple touch icon.
 
 ## Layout decisions
 

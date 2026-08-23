@@ -3,6 +3,12 @@ fullnameOverride: ""
 
 imagePullSecrets: []
 
+oidc:
+  issuerUrl: ""
+  jwksUrl: ""
+  webClientId: avelys-web
+  apiAudience: avelys-api
+
 registryCredentials:
   enabled: false
   name: ""
@@ -28,11 +34,7 @@ web:
     pullPolicy: IfNotPresent
     tag: "0.1.0"
   runtimeConfig:
-    apiBaseUrl: /api
-    oidcAuthority: ""
-    oidcClientId: avelys-web
-    oidcRedirectUri: ""
-    oidcPostLogoutRedirectUri: ""
+    apiBaseUrl: /api/v1
   service:
     port: 80
     targetPort: 8080
@@ -69,9 +71,6 @@ api:
     logLevel: INFO
     corsOrigins: ""
     authEnabled: true
-    oidcIssuerUrl: ""
-    oidcJwksUrl: ""
-    oidcAudience: avelys-api
   # Optional Secret whose keys are imported as API environment variables.
   existingSecret: ""
   service:

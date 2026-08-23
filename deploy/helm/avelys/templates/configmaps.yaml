@@ -8,10 +8,8 @@ data:
   config.js: |
     window.__APP_CONFIG__ = {
       apiBaseUrl: {{ .Values.web.runtimeConfig.apiBaseUrl | quote }},
-      oidcAuthority: {{ .Values.web.runtimeConfig.oidcAuthority | quote }},
-      oidcClientId: {{ .Values.web.runtimeConfig.oidcClientId | quote }},
-      oidcRedirectUri: {{ .Values.web.runtimeConfig.oidcRedirectUri | quote }},
-      oidcPostLogoutRedirectUri: {{ .Values.web.runtimeConfig.oidcPostLogoutRedirectUri | quote }}
+      oidcAuthority: {{ .Values.oidc.issuerUrl | quote }},
+      oidcClientId: {{ .Values.oidc.webClientId | quote }}
     };
 {{- if .Values.api.enabled }}
 ---
@@ -26,7 +24,7 @@ data:
   LOG_LEVEL: {{ .Values.api.config.logLevel | quote }}
   CORS_ORIGINS: {{ .Values.api.config.corsOrigins | quote }}
   AUTH_ENABLED: {{ .Values.api.config.authEnabled | quote }}
-  OIDC_ISSUER_URL: {{ .Values.api.config.oidcIssuerUrl | quote }}
-  OIDC_JWKS_URL: {{ .Values.api.config.oidcJwksUrl | quote }}
-  OIDC_AUDIENCE: {{ .Values.api.config.oidcAudience | quote }}
+  OIDC_ISSUER_URL: {{ .Values.oidc.issuerUrl | quote }}
+  OIDC_JWKS_URL: {{ .Values.oidc.jwksUrl | quote }}
+  OIDC_AUDIENCE: {{ .Values.oidc.apiAudience | quote }}
 {{- end }}
