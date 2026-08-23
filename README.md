@@ -18,6 +18,7 @@ deploy/
 docs/
   architecture.md      Boundaries and technical decisions
   keycloak.md          Realm/client configuration checklist
+  oidc-operations.md   OIDC configuration and release runbook
   web/implementation.md Landing-page design and implementation decisions
 compose.yaml           Local production-like stack
 ```
@@ -76,7 +77,9 @@ helm lint deploy/helm/avelys -f deploy/helm/environments/dev.yaml
 helm template avelys deploy/helm/avelys -f deploy/helm/environments/prod.yaml
 ```
 
-For the first landing-page release, follow [the deployment runbook](deploy/README.md).
+For a release, follow [the deployment runbook](deploy/README.md). OIDC environment,
+Keycloak, and troubleshooting steps are in the
+[OIDC operations runbook](docs/oidc-operations.md).
 The image repository is `dtr.admin.avade.fr/avelys/web`; replace the example Argo CD Git
 URL before deploying.
 

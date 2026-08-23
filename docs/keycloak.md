@@ -1,5 +1,8 @@
 # Keycloak setup
 
+For environment values, publication, and troubleshooting, see the
+[OIDC operations runbook](oidc-operations.md).
+
 Use separate Keycloak clients for the browser and API audience.
 
 ## Browser client: `avelys-web`

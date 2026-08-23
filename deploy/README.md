@@ -27,8 +27,8 @@ For a production release, tag the release commit and use the guarded release tar
 
 ```bash
 git tag -a vX.Y.Z -m "Avelys vX.Y.Z"
-git push origin vX.Y.Z
 make web-release
+git push origin master vX.Y.Z
 ```
 
 `make web-release` fails unless `HEAD` has an exact Git tag. `make web-push` can also be
@@ -38,6 +38,10 @@ for normal CI releases:
 ```bash
 make web-push IMAGE_TAG=temporary-test
 ```
+
+Publish the image before pushing the release commit and tag. This prevents Argo CD from
+reconciling an image reference that does not exist yet. The complete OIDC configuration
+and release procedure is in [the OIDC operations runbook](../docs/oidc-operations.md).
 
 ## Direct Helm deployment
 
