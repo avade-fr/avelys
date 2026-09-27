@@ -133,6 +133,7 @@ const messages = {
     },
     auth: {
       unavailable: 'L’espace client sera disponible dès que le fournisseur d’identité sera configuré.',
+      loginFailed: 'Impossible de lancer la connexion. Vérifiez l’accès au fournisseur d’identité et réessayez.',
       privateArea: 'Espace client sécurisé',
       welcome: 'Bienvenue',
       loading: 'Chargement de votre profil sécurisé…',
@@ -276,6 +277,7 @@ const messages = {
     },
     auth: {
       unavailable: 'The client portal will be available once the identity provider is configured.',
+      loginFailed: 'Sign-in could not start. Check access to the identity provider and try again.',
       privateArea: 'Secure client portal',
       welcome: 'Welcome',
       loading: 'Loading your secure profile…',

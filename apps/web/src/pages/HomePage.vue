@@ -143,7 +143,6 @@ const audiences = ['banks', 'servicers', 'funds', 'fintechs'] as const
             <h3>{{ t(`audiences.${audience}.title`) }}</h3>
             <p>{{ t(`audiences.${audience}.body`) }}</p>
           </div>
-          <i aria-hidden="true">↗</i>
         </article>
       </div>
     </div>

@@ -256,7 +256,7 @@ nav > a:not(.button):not(.header-auth-button):hover::after { transform: scaleX(1
 .orbit-two { inset: 0; animation: orbit-pulse 4s 1s ease-in-out infinite; }
 .security-core { display: grid; width: 130px; height: 130px; place-items: center; border: 1px solid rgba(255, 255, 255, 0.32); border-radius: 50%; background: rgba(1, 126, 130, 0.25); box-shadow: 0 0 70px rgba(43, 199, 191, 0.16); backdrop-filter: blur(10px); }
 .security-core svg { width: 58px; color: #9ce0dc; }
-.security-points { position: absolute; right: 0; bottom: 0; left: 0; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid rgba(255, 255, 255, 0.15); }
+.security-points { position: absolute; right: 0; bottom: 0; left: 0; display: grid; grid-template-columns: repeat(3, 1fr); padding-bottom: 16px; border-top: 1px solid rgba(255, 255, 255, 0.15); }
 .security-points span { padding-top: 27px; color: #c1d6e1; font-size: 0.83rem; }
 
 .contact-section { text-align: center; background: var(--mint); }

@@ -7,11 +7,17 @@ import { setLocale } from '@/i18n'
 
 const { locale, t } = useI18n()
 const menuOpen = ref(false)
+const loginError = ref(false)
 
-function openAccount() {
+async function openAccount() {
   menuOpen.value = false
   if (auth.isAuthenticated.value) return
-  void auth.login()
+  loginError.value = false
+  try {
+    await auth.login()
+  } catch {
+    loginError.value = true
+  }
 }
 
 function selectLocale(nextLocale: 'fr' | 'en') {
@@ -72,5 +78,23 @@ function closeMenu() {
         </button>
       </nav>
     </div>
+    <p v-if="loginError" class="header-auth-error" role="alert">{{ t('auth.loginFailed') }}</p>
   </header>
 </template>
+
+<style scoped>
+.header-auth-error {
+  position: absolute;
+  top: 100%;
+  right: 24px;
+  max-width: min(420px, calc(100vw - 32px));
+  margin: 8px 0 0;
+  padding: 10px 14px;
+  border: 1px solid #b91c1c;
+  border-radius: 8px;
+  color: #7f1d1d;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(0, 32, 83, 0.12);
+  font-size: 0.82rem;
+}
+</style>
