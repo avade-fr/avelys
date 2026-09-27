@@ -14,7 +14,10 @@ class Settings(BaseSettings):
     app_name: str = "Avelys API"
     app_env: str = "development"
     log_level: str = "INFO"
-    cors_origins: str = "http://localhost:5173,http://localhost:8080"
+    cors_origins: str = (
+        "http://avelys.internal,http://avelys.internal:5173,http://avelys.internal:8080,"
+        "http://localhost:5173,http://localhost:8080"
+    )
 
     auth_enabled: bool = False
     oidc_issuer_url: str = ""

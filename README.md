@@ -67,6 +67,10 @@ pip install -e '.[dev]'
 uvicorn app.main:app --reload
 ```
 
+To start both native services from VS Code, select **Full Stack - avelys.internal**
+in `.vscode/launch.json`. The web server listens on all VM interfaces at port 5173
+and the API at port 8000.
+
 ## Validate and package
 
 ```bash
